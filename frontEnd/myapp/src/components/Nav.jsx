@@ -12,6 +12,7 @@ function AppNavbar( props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link onClick={()=>{props.changeView("Home") }}>Home</Nav.Link>
+        
          
           <NavDropdown title="Occasions" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/occasions" onClick={()=>{props.set("");props.changeView("Occasions")}}>Show All</NavDropdown.Item>

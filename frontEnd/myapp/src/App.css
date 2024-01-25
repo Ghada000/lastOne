@@ -445,3 +445,59 @@ color: #d537ea;}
 }
 
 /* ... (remaining styles) */
+/* Add this CSS to your Cart component or a separate CSS file */
+
+.cart {
+  background-color: #e3999f;
+  border: 2px solid #f5c6cb;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.cart h2 {
+  color: #721c24;
+}
+
+.cart-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item p {
+  color: #721c24;
+  margin: 0;
+}
+
+.cart-item button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cart-item button:hover {
+  background-color: #c82333;
+}
+
+button {
+  background-color: #d700fc;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #6fff00;
+}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
+import Cart from './Cart'; // Import the Cart component
 
-function Plants({term}) {
+function Plants({ term }) {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -11,13 +12,13 @@ function Plants({term}) {
   const [category, setCategory] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [input, setInput] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/plants')
       .then((response) => {
         console.log(response.data);
         setData(response.data);
-      
       })
       .catch((error) => {
         console.log(error);
@@ -41,7 +42,7 @@ function Plants({term}) {
         setDescription('');
         setImage('');
         setCategory('');
-        setInput(false); 
+        setInput(false);
       })
       .catch(error => {
         console.log(error);
@@ -94,6 +95,22 @@ function Plants({term}) {
       .catch(err => console.log(err));
   }
 
+  const handleAddToCart = (item) => {
+    setCartItems([...cartItems, item]);
+  };
+
+  const handleRemoveFromCart = (itemId) => {
+    const updatedCart = cartItems.filter(item => item.id !== itemId);
+    setCartItems(updatedCart);
+  };
+
+  const handleBuy = () => {
+    // Implement your buy logic here, e.g., send a request to a server, update inventory, etc.
+    alert('Thank you for your trust for our services <3')
+    console.log('Items bought:', cartItems);
+    setCartItems([]); // Clear the cart after buying
+  };
+
   return (
     <div>
       <div className="add-container">
@@ -133,30 +150,35 @@ function Plants({term}) {
       </div>
 
       {data
-      .filter(e=>e.category.includes(term))
+        .filter(e => e.category.includes(term))
+        .map((item) => (
+          <div key={item.id}>
+            <h6 className='name'>Name : {item.name}</h6>
+            <h6 className='description'>Description : {item.description}</h6>
+            <h6 className='price'>Price : {item.price}</h6>
+            <h6 className='category'>Category : {item.category}</h6>
+            <img className='image' src={item.image} alt={`Article ${item.id}`} />
 
-      .map((item) => (
-        <div key={item.id}>
-          <h6 className='name'>Name : {item.name}</h6>
-          <h6 className='description'>Description : {item.description}</h6>
-          <h6 className='price'>Price : {item.price}</h6>
-          <h6 className='category'>Category : {item.category}</h6>
-          <img className='image'src={item.image} alt={`Article ${item.id}`} />
+            {editingId === item.id ? (
+              <>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <button className="btn" onClick={() => handleUpdate(item.id)}>Update</button>
+              </>
+            ) : (
+              <button className="btn-update" onClick={() => handleUpdateClick(item.id)}>Update</button>
+            )}
 
-          {editingId === item.id ? (
-            <>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-              <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
-              <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-              <button className="btn" onClick={() => handleUpdate(item.id)}>Update</button>
-            </>
-          ) : (
-            <button className=" btn-update" onClick={() => handleUpdateClick(item.id)}>Update</button>
-          )}
+            <button className="btn-delete" onClick={() => handleDelete(item.id)}>Delete</button>
 
-          <button  className=" btn-delete" onClick={() => handleDelete(item.id)}>Delete</button>
-        </div>
-      ))}
+            <button className="btn-delete" onClick={() => handleAddToCart({ id: item.id, name: item.name, image: item.image, description: item.description, category: item.category, price: item.price })}>
+              Add to Cart
+            </button>
+          </div>
+        ))}
+
+      <Cart cartItems={cartItems} handleRemoveFromCart={handleRemoveFromCart} handleBuy={handleBuy} />
     </div>
   );
 }
