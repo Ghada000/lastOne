@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Occasions() {
+function Occasions({term}) {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [error, setError] = useState(null);
@@ -14,6 +14,7 @@ function Occasions() {
         setData(response.data);
         setFilteredData(response.data); 
         setError(null);
+      
       })
       .catch((error) => {
         console.error(error);
@@ -39,7 +40,9 @@ function Occasions() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       {error && <p>{error}</p>}
-      {filteredData.map((item) => (
+      {filteredData
+      .filter(e=>e.name.includes(term))
+      .map((item) => (
         <div key={item.id}>
           <img src={item.image} alt={item.name} />
           <h2>{item.name}</h2>

@@ -32,11 +32,11 @@
 .navbar {
   background-color: pink;
   border-bottom: 10px solid #6c757d;
-  padding: 10px 20px;
+  padding: 5px;
 }
 
 .navbar-brand {
-  font-size: 50px;
+  font-size: 10px;
   font-weight: bolder;
   color: #6c757d; 
 }
