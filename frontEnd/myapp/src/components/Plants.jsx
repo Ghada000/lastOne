@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
 
-function Plants() {
+function Plants({term}) {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -17,6 +17,7 @@ function Plants() {
       .then((response) => {
         console.log(response.data);
         setData(response.data);
+      
       })
       .catch((error) => {
         console.log(error);
@@ -131,9 +132,12 @@ function Plants() {
         )}
       </div>
 
-      {data.map((item) => (
+      {data
+      .filter(e=>e.category.includes(term))
+
+      .map((item) => (
         <div key={item.id}>
-          <h6 className= 'name'>Name : {item.name}</h6>
+          <h6 className='name'>Name : {item.name}</h6>
           <h6 className='description'>Description : {item.description}</h6>
           <h6 className='price'>Price : {item.price}</h6>
           <h6 className='category'>Category : {item.category}</h6>
