@@ -4,6 +4,7 @@ import Occasions from './components/Occasions'
 import Plants from './components/Plants';
 import Nav from './components/Nav';
 import Home from './components/Home.jsx'
+import Cart from './components/Cart.jsx';
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
     <div className="App">
       <Nav changeView={changeView} set={setTerm}/> 
       {view==="Home"&& <Home changeView={changeView}/>}
+   
+
       {view==="Occasions"&& <Occasions term={term} changeView={changeView} />}
       {view==="Plants"&& <Plants term={term} changeView={changeView}/>}
       
